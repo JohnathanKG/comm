@@ -684,14 +684,14 @@ void check_type_and_throw(lua_State* L)
         std::is_same<T, ulong>::value
         )
     {
-        result = lua_isinteger(L, -1);
+        result = true;
     }
     else if constexpr (
         std::is_same<T, float>::value ||
         std::is_same<T, double>::value
     )
     {
-        result = lua_isnumber(L, -1);
+        result = false;
     }
     else if constexpr (std::is_same<T, bool>::value)
     {

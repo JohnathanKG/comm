@@ -357,6 +357,9 @@
     <ClInclude Include="..\..\..\coder\bufpack_lz4.h">
       <Filter>coder</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\stacktrace\stacktrace.h" />
+      <Filter>stacktrace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\crypt\sha1.cpp">
@@ -464,6 +467,10 @@
     <ClCompile Include="..\..\..\profiler\profiler.cpp">
       <Filter>profiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\stacktrace\stacktrace.cpp" />
+    <ClCompile Include="..\..\..\stacktrace\stacktrace_ux.cpp" />
+    <ClCompile Include="..\..\..\stacktrace\stacktrace_win.cpp" />
+    <ClCompile Include="..\..\..\str.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="..\..\..\doc\visualc-syntax\coid.natvis" />

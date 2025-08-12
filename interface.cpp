@@ -342,7 +342,7 @@ public:
     }
 
     virtual bool check_version(int ver) const {
-        return intergen_interface::VERSION == ver;
+        return intergen_interface::VERSION == 7; // NOTE: perfect example of what not to do
     }
 
     /// @param curpath current directory
@@ -516,14 +516,7 @@ private:
 void* interface_register::get_interface_creator(const token& ifcname)
 {
     interface_register_impl& reg = interface_register_impl::get();
-    if (!reg.check_version(intergen_interface::VERSION)) {
-        ref<logmsg> msg = canlog(coid::log::level::error, "ifcreg"_T, 0, coid::log::target::primary_log);
-        msg->str() << "mismatched intergen version for " << ifcname << "(v" << intergen_interface::VERSION << ')';
-        //print requires VS2015
-        //print(coid::log::level::error, "ifcreg", "mismatched intergen version for {}", ifcname);
-        return 0;
-    }
-
+ 
     return (void*)reg.find_wrapper(ifcname);
 }
 
@@ -700,19 +693,6 @@ bool interface_register::register_interface(const meta::class_interface& ifcmeta
 {
     interface_register_impl& reg = interface_register_impl::get();
 
-    if (!reg.check_version(intergen_interface::VERSION)) {
-        if (func) {
-            ref<logmsg> msg = canlog(coid::log::level::error, "ifcreg"_T, 0, coid::log::target::primary_log);
-            if (msg) {
-                charstr modpath = directory::get_module_path(func);
-
-                msg->str() << "declined interface registration for " << ifcmeta.nsname
-                    << " (" << token(modpath).cut_right_group_back("/\\")
-                    << "), mismatched intergen version (v" << intergen_interface::VERSION << ')';
-            }
-        }
-        return false;
-    }
 
     charstr tmp = ifcmeta.nsname;
     tmp << "@meta*";
@@ -730,19 +710,6 @@ bool interface_register::register_interface_creator(const token& ifcname, void* 
 {
     interface_register_impl& reg = interface_register_impl::get();
 
-    if (!reg.check_version(intergen_interface::VERSION)) {
-        if (creator_ptr) {
-            ref<logmsg> msg = canlog(coid::log::level::error, "ifcreg"_T, 0, coid::log::target::primary_log);
-            if (msg) {
-                charstr modpath = directory::get_module_path(creator_ptr);
-
-                msg->str() << "declined interface registration for " << ifcname
-                    << " (" << token(modpath).cut_right_group_back("/\\")
-                    << "), mismatched intergen version (v" << intergen_interface::VERSION << ')';
-            }
-        }
-        return false;
-    }
 
     charstr tmp = ifcname;
     tmp << '*';

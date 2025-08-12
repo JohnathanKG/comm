@@ -208,8 +208,6 @@ $-(/if)$
 
         typedef intergen_interface* (*fn_client)();
         fn_client cc = []() -> intergen_interface* {
-            //also init profiler backend for clients from a different module
-            profiler::init_backend_in_module();
             return new C;
         };
 

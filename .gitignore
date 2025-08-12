@@ -2,5 +2,9 @@ _build/msvc/2010/out/
 _build/msvc/2015/out/
 _build/msvc/2017/out/
 _build/msvc/2019/out/
+_build/msvc/2022/out/
+.vs
 bin/
 obj/
+bazel-*
+comm_test/

@@ -196,7 +196,7 @@ public:
 
     static bool register_interface(const meta::class_interface& ifcmeta, const void* func);
 
-    static bool register_interface_creator(const token& ifcname, void* creator, const meta::class_interface* ifcmeta);
+    static bool register_interface_creator(const token& ifcname, void* creator, const meta::class_interface* ifcmeta = nullptr);
 
     static void* get_interface_creator(const token& ifcname);
 

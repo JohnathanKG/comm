@@ -9,6 +9,7 @@
 
 #include "../hash/hashkeyset.h"
 #include "ig.h"
+#include "str.h"
 
 //debug string:
 // [inputs] $(ProjectDir)..\..\..\intergen\metagen
@@ -419,7 +420,8 @@ int generate_index(const charstr& path)
 ////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
-    //test();
+    bool hasOutputArg = argc >= 4;
+    charstr output = hasOutputArg ? token(argv[3]).cut_left_group_back("\\/", token::cut_trait_return_with_sep_default_empty()) : token(argv[1]).cut_left_group_back("\\/", token::cut_trait_return_with_sep_default_empty());
     if (argc >= 2 && token(argv[1]) == "-index") {
         //generate index from existing html files
         charstr path;
@@ -435,8 +437,8 @@ int main(int argc, char* argv[])
         out << "usage: intergen <file>.hpp template-path\n";
         return -1;
     }
-
-    charstr fdst = token(argv[1]).cut_left_back('.');
+    charstr fdir = output;
+    charstr fdst = token(hasOutputArg ? argv[3] : argv[1]).cut_left_back('.');
     fdst << ".inl";
 
     charstr tdir = argv[2];
@@ -446,7 +448,6 @@ int main(int argc, char* argv[])
     }
     directory::treat_trailing_separator(tdir, directory::separator());
 
-    charstr fdir = token(argv[1]).cut_left_group_back("\\/", token::cut_trait_return_with_sep_default_empty());
 
     File cgf;
 

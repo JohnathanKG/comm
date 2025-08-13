@@ -130,7 +130,7 @@ void sysMilliSecondSleep(int milliseconds)
 uint sysGetPid()
 {
 #ifdef SYSTYPE_WIN
-    return _getpid();
+    return GetCurrentProcessId();
 #else
     return getpgrp();
 #endif

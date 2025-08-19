@@ -480,7 +480,7 @@ public:
     {
         DASSERT_RET(this->check_versionid(vid));
 
-        return del_item(vid.idx);
+        return del_item(vid.id32());
     }
 
     /// @return previously deleted but still valid item
@@ -625,8 +625,8 @@ public:
     /// @param id id of the item
     const T* get_item(versionid vid) const COID_REQUIRES((VERSIONING))
     {
-        DASSERT_RET(this->check_versionid(vid) && get_bit(vid.idx), 0);
-        return ptr(vid.idx);
+        DASSERT_RET(this->check_versionid(vid) && get_bit(vid.id32()), 0);
+        return ptr(vid.id32());
     }
 
     ///Return an item given id
@@ -634,18 +634,18 @@ public:
     /// @note non-const operator [] disabled on tracking allocators, use explicit get_mutable_item to indicate the element will be modified
     T* get_item(versionid vid) COID_REQUIRES((VERSIONING))
     {
-        DASSERT_RET(this->check_versionid(vid) && get_bit(vid.idx), 0);
-        return ptr(vid.idx);
+        DASSERT_RET(this->check_versionid(vid) && get_bit(vid.id32()), 0);
+        return ptr(vid.id32());
     }
 
     ///Return an item given id
     /// @param id id of the item
     T* get_mutable_item(versionid vid) COID_REQUIRES((VERSIONING))
     {
-        DASSERT_RET(this->check_versionid(vid) && get_bit(vid.idx), 0);
-        this->set_modified(vid.idx);
+        DASSERT_RET(this->check_versionid(vid) && get_bit(vid.id32()), 0);
+        this->set_modified(vid.id32());
 
-        return ptr(vid.idx);
+        return ptr(vid.id32());
     }
 
     const T& operator [] (versionid vid) const COID_REQUIRES((VERSIONING))
@@ -856,7 +856,7 @@ public:
     /// @return true if item with id is valid
     bool is_valid_id(versionid vid) const COID_REQUIRES((VERSIONING))
     {
-        return this->check_versionid(vid) && get_bit(vid.idx);
+        return this->check_versionid(vid) && get_bit(vid.id32());
     }
 
     /// @return true if item is valid
@@ -937,10 +937,10 @@ protected:
 
     bool check_versionid(versionid vid) const {
         if coid_constexpr_if (VERSIONING) {
-            if (!vid.is_valid() || vid.idx >= created())
+            if (!vid.is_valid() || vid.id32() >= created())
                 return false;
-            uint8 ver = tracker_t::version_array()[vid.idx];
-            return vid.version == ver;
+            uint8 ver = tracker_t::version_array()[vid.id32()];
+            return vid == versionid(vid.id32(), ver);
         }
         else
             return true;

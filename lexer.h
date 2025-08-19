@@ -38,6 +38,7 @@
 #ifndef __COID_COMM_LEXER__HEADER_FILE__
 #define __COID_COMM_LEXER__HEADER_FILE__
 
+#include "commassert.h"
 #include "namespace.h"
 #include "commexception.h"
 #include "token.h"

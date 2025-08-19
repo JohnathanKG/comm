@@ -41,6 +41,7 @@
 #include "trait.h"
 #include "bitrange.h"
 #include "alloc/commalloc.h"
+#include <cstdint>
 
 COID_NAMESPACE_BEGIN
 
@@ -58,7 +59,7 @@ enum class iterator_direction {
 //helper insert/delete fnc
 template <class T> T* __move(ints nitemsfwd, T* ptr, uints nitems) {
     if (nitems)
-        memmove(ptr + nitemsfwd, ptr, nitems * sizeof(T));
+        memmove((std::uintptr_t*)ptr + nitemsfwd, ptr, nitems * sizeof(T));
     return ptr;
 }
 template <> inline void* __move(ints nitemsfwd, void* ptr, uints nitems) { return __move<char>(nitemsfwd, (char*)ptr, nitems); }
@@ -69,7 +70,7 @@ template <class T> T* __ins(T* &ptr, uints nfrom, uints nlen, uints nins = 1) {
 template <> inline void* __ins(void* &ptr, uints nfrom, uints nlen, uints nins) { return __ins<char>((char*&)ptr, nfrom, nlen, nins); }
 
 template <class T> T* __del(T* &ptr, uints nfrom, uints nlen, uints ndel = 1) {
-    memmove(ptr + nfrom, ptr + nfrom + ndel, (nlen - ndel - nfrom) * sizeof(T));
+    memmove((std::uintptr_t*)ptr + nfrom, ptr + nfrom + ndel, (nlen - ndel - nfrom) * sizeof(T));
     return ptr;
 }
 template <> inline void* __del(void* &ptr, uints nfrom, uints nlen, uints ndel) { return __del<char>((char*&)ptr, nfrom, nlen, ndel); }
@@ -1098,7 +1099,7 @@ public:
         DASSERT(byte_size == nitems * sizeof(T)); //there should be no remainder
         T* b = add(nitems);
 
-        const uint8* src = static_cast<const uint8*>(data);
+        const uint8* src = reinterpret_cast<const uint8*>(data);
         T* e = ptre();
 
         for (int i = 0; i < sizeof(T); ++i)

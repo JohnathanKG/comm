@@ -130,7 +130,6 @@ opt_string & opt_string::operator << (char c)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-#ifdef SYSTYPE_WIN
 # ifdef SYSTYPE_32
 
 opt_string & opt_string::operator << (ints v)
@@ -172,7 +171,7 @@ opt_string & opt_string::operator << (uint v)
 }
 
 # endif
-#elif defined(SYSTYPE_32)
+#if defined(SYSTYPE_32)
 
 opt_string & opt_string::operator << (long v)
 {
@@ -191,8 +190,7 @@ opt_string & opt_string::operator << (ulong v)
     _zstr->get_str() << v;
     return *this;
 }
-
-#endif //SYSTYPE_WIN
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 opt_string & opt_string::operator << (float v)

@@ -1,7 +1,7 @@
 #pragma once
 #ifndef __COMM_ALLOC_SLOTALLOC_BMP_H__
 #define __COMM_ALLOC_SLOTALLOC_BMP_H__
-
+#include <stdio.h>
 #include "../dynarray.h"
 #include "../mathi.h"
 #include "../bitrange.h"

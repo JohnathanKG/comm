@@ -8,6 +8,7 @@
 #include "../intergen/ifc.h"
 
 #include "../hash/hashkeyset.h"
+#include "bits/types.h"
 #include "ig.h"
 #include "str.h"
 
@@ -55,7 +56,7 @@ struct File
 
 ////////////////////////////////////////////////////////////////////////////////
 template<class T>
-static int generate(bool empty, const T& t, const charstr& patfile, const charstr& outfile, __time64_t mtime)
+static int generate(bool empty, const T& t, const charstr& patfile, const charstr& outfile, __time_t mtime)
 {
     directory::xstat st;
     bifstream bit;
@@ -151,7 +152,7 @@ int generate_rl(const File& cgf, charstr& patfile, const token& outfile)
     else
         out << "no rl_cmd's found\n";
 
-    __time64_t mtime = cgf.mtime + 2;
+    __time_t mtime = cgf.mtime + 2;
     directory::set_file_times(outfile, mtime, mtime);
 
     return 0;

@@ -182,7 +182,7 @@ opcd directory::mkdir(zstring name, mode_t mode)
 opcd directory::move_file(zstring src, zstring dst, bool replace_existing)
 {
     //TODO directories
-    if (0 == ::rename(src.c_str(), dst.c_str()))
+    if (0 == rename_file(src.c_str(), dst.c_str(), true))
         return 0;
     return ersIO_ERROR;
 }
@@ -342,14 +342,6 @@ bool directory::is_directory_empty(const coid::token& directory_path)
 
 ////////////////////////////////////////////////////////////////////////////////
 bool directory::is_valid_name(const coid::token& file_name)
-{
-    DASSERTX(0, "not implemented!");
-
-    return false;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-bool directory::is_valid_path(const coid::token& path)
 {
     DASSERTX(0, "not implemented!");
 

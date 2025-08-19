@@ -661,7 +661,7 @@ public:
         }
 
         virtual void* insert(uints n, const void* defval) override {
-            throw std::exception("unsupported");
+            throw std::exception(); // unsupported
         }
 
         virtual bool is_continuous() const override { return true; }

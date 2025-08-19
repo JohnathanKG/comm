@@ -156,6 +156,15 @@
 # endif
 #endif
 
+inline void breakpoint(void)
+{
+#ifdef SYSTYPE_MSVC
+    __debugbreak();
+#elif SYSTYPE_CLANG
+    asm volatile("int3");
+#endif
+}
+
 #if defined(__cpp_lib_endian)
 #include <bit>
 namespace coid {
@@ -186,7 +195,7 @@ namespace coid {
 #include <cstdint>
 
 /// Operator new for preallocated storage
-inline void* operator new (size_t, const void* p) { return (void*)p; }
+inline void* operator new (std::size_t, const void* p) { return (void*)p; }
 inline void operator delete (void*, const void*) {}
 
 
@@ -225,8 +234,8 @@ typedef uint8               uchar;
 typedef int8                schar;
 
 ///Integer types with the same size as pointer on the platform
-typedef size_t              uints;
-typedef ptrdiff_t           ints;
+typedef std::size_t              uints;
+typedef std::ptrdiff_t           ints;
 
 //bound to sized integers instead of size_t
 #ifdef SYSTYPE_64
@@ -286,6 +295,7 @@ private:
     static constexpr uint64 NOVAL = 0;
     static constexpr uint8 MAGIC_MARK = 0x5c;
 
+public:
     union {
         struct {
             uint32 idx;
@@ -296,7 +306,6 @@ private:
         uint64 value = NOVAL;
     };
 
-public:
 
     constexpr versionid() = default;
     constexpr versionid(uint id, uint version) : idx(id), version(version), mark(MAGIC_MARK) {}
@@ -310,7 +319,7 @@ public:
 
     bool is_valid() const {
 #ifdef _DEBUG
-        if (!(mark == MAGIC_MARK || value == 0)) __debugbreak();
+        if (!(mark == MAGIC_MARK || value == 0)) breakpoint();
 #endif
         return mark == MAGIC_MARK;
     }
@@ -320,7 +329,7 @@ public:
     uint id32() const {
         if (!is_valid()) {
 #ifdef _DEBUG
-            __debugbreak();
+            breakpoint();
 #endif
             return UMAX32;
         }
@@ -391,7 +400,7 @@ const T* const_addr(T&& tmp) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void *_xmemcpy( void *dest, const void *src, size_t count );
+void *_xmemcpy( void *dest, const void *src, std::size_t count );
 #if 0//defined _DEBUG
 #define xmemcpy     _xmemcpy
 #else

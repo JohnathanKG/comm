@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 4.1)
 project(comm)
 
+set(CMAKE_CXX_STANDARD 23)
 include_directories(
     ${CMAKE_PROJ}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/
 )
-target_link_libraries(ot)
 
 add_library(comm STATIC
     binstring.cpp
@@ -22,7 +22,6 @@ add_library(comm STATIC
     dir.cpp
     dir.h
     dirgcc.cpp
-    dirwin.cpp
     dynarray.h
     fastdelegate.h
     function.h
@@ -43,7 +42,6 @@ add_library(comm STATIC
     parser.h
     password.h
     process.h
-    process_win.cpp
     pthreadx.cpp
     pthreadx.h
     ptrowner.h
@@ -184,7 +182,6 @@ add_library(comm STATIC
     stacktrace/stacktrace.cpp
     stacktrace/stacktrace.h
     stacktrace/stacktrace_ux.cpp
-    stacktrace/stacktrace_win.cpp
     sync/condition_variable.cpp
     sync/condition_variable.h
     sync/guard.h

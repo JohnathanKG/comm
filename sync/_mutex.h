@@ -45,8 +45,11 @@
 #include "../commassert.h"
 #include "../pthreadx.h"
 
+#ifdef SYSTYPE_MSVC
 #include <sys/timeb.h>
-
+#elif defined(SYSTYPE_LINUX)
+#include <sys/time.h>
+#endif
 #include "guard.h"
 
 
@@ -68,13 +71,13 @@ public:
 #endif
         uint8   _tmp[CS_SIZE];
     };
+#else 
+    pthread_mutex_t     _mutex;
 #endif
 
 private:
 #ifdef SYSTYPE_WIN
     critical_section    _cs;
-#else
-    pthread_mutex_t     _mutex;
 #endif
 
     int                 _init;
@@ -115,12 +118,14 @@ public:
 #ifdef SYSTYPE_MSVC
         struct ::__timeb64 tb;
         _ftime64_s(&tb);
-#else
-        struct ::timeb tb;
-        ftime(&tb);
-#endif
         out->tv_sec = uint(delaymsec/1000 + tb.time);
         out->tv_nsec = (delaymsec%1000 + tb.millitm) * 1000000;
+#else
+        struct ::timeval tb;
+        gettimeofday(&tb, NULL);
+        out->tv_sec = uint(delaymsec/1000 + tb.tv_sec);
+        out->tv_nsec = (delaymsec%1000 + tb.tv_usec) * 1000;
+#endif
     }
 
 //#ifdef _DEBUG

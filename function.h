@@ -189,7 +189,7 @@ struct closure_traits_base
         }
 
         function() : c(0) {}
-        function(nullptr_t) : c(0) {}
+        function(std::nullptr_t) : c(0) {}
 
         function(const function& other) : c(0) {
             if (other.c)
@@ -392,7 +392,7 @@ public:
 
     callback() {}
 
-    callback(nullptr_t) {}
+    callback(std::nullptr_t) {}
 
     ///A plain function
     callback(R(*fn)(Args...)) {
@@ -561,7 +561,7 @@ public:
     }
 
 
-    callback& operator = (nullptr_t) {
+    callback& operator = (std::nullptr_t) {
         destroy();
         _caller = 0;
         return *this;

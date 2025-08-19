@@ -90,12 +90,14 @@ public:
 #ifdef SYSTYPE_MSVC
         struct ::__timeb64 tb;
         _ftime64_s(&tb);
+        out->tv_sec = uint(delaymsec/1000 + tb.time);
+        out->tv_nsec = (delaymsec%1000 + tb.millitm) * 1000000;
 #else
-        struct ::timeb tb;
-        ftime(&tb);
+        struct ::timeval tb;
+        gettimeofday(&tb, NULL);
+        out->tv_sec = uint(delaymsec/1000 + tb.tv_sec);
+        out->tv_nsec = (delaymsec%1000 + tb.tv_usec) * 1000;
 #endif
-        out->tv_sec = uint(delaymsec / 1000 + tb.time);
-        out->tv_nsec = (delaymsec % 1000 + tb.millitm) * 1000000;
     }
 };
 

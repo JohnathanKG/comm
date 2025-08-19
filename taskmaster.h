@@ -39,6 +39,7 @@
 
 #include "namespace.h"
 
+#include <stdio.h>
 #include "trait.h"
 #include "alloc/slotalloc.h"
 #include "bitrange.h"

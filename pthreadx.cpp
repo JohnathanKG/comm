@@ -192,7 +192,7 @@ void thread::join( thread_t tid )
         WaitForSingleObject(thread_handle, INFINITE);
     }
 #else
-    int result = pthread_join(tid);
+    int result = pthread_join(tid, NULL);
     if (result != 0)
     {
         DASSERT(0);

@@ -139,7 +139,11 @@ public:
         _wpos = 0;
         if (_op < 0 && _handle != -1) {
             setpos(_wpos);
+#ifdef SYSTYPE_MSVC
             _chsize(_handle, 0);
+#elif SYSTYPE_CLANG
+            ftruncate(_handle, 0);
+#endif
         }
     }
 

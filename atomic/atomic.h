@@ -222,7 +222,7 @@ inline bool b_cas128(
         vall,
         cmp) == 1;
 #elif defined(__GNUC__)
-    return (coid::int64*)__sync_bool_compare_and_swap((__int128_t*)ptr, (__int128_t*)cmp, (__int128_t(valh) << 64) + vall);
+    return (coid::int64*)__sync_bool_compare_and_swap((__int128_t*)ptr, *(__int128_t*)cmp, (__int128_t(valh) << 64) + vall);
 #endif
 }
 #endif

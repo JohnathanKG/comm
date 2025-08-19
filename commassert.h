@@ -97,8 +97,8 @@ COID_NAMESPACE_END
 #define RASSERT(expr)               XASSERTCOND(expr) coid::__rassert(0,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_BREAK; } while(0)
 #define RASSERTX(expr,txt)          XASSERTCOND(expr) coid::__rassert(coid::opt_string() << txt,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_BREAK; } while(0)
 
-#define RASSERT_FATAL(expr)         XASSERTCOND(expr) coid::__rassert(0,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_BREAK; std::abort(); } while(0)
-#define RASSERT_FATALX(expr,txt)    XASSERTCOND(expr) coid::__rassert(coid::opt_string() << txt,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_BREAK; std::abort(); } while(0)
+#define RASSERT_FATAL(expr)         XASSERTCOND(expr) coid::__rassert(0,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_BREAK; abort(); } while(0)
+#define RASSERT_FATALX(expr,txt)    XASSERTCOND(expr) coid::__rassert(coid::opt_string() << txt,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_BREAK; abort(); } while(0)
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -184,7 +184,7 @@ public:
     opt_string() : _zstr(0)
     {}
 
-    opt_string(nullptr_t) : _zstr(0)
+    opt_string(std::nullptr_t) : _zstr(0)
     {}
 
     ~opt_string();
@@ -199,7 +199,6 @@ public:
         return (*this << (typename resolve_enum<Enum>::type)v);
     }
 
-#ifdef SYSTYPE_WIN
 # ifdef SYSTYPE_32
     opt_string& operator << (ints i);
     opt_string& operator << (uints i);
@@ -207,7 +206,7 @@ public:
     opt_string& operator << (int i);
     opt_string& operator << (uint i);
 # endif
-#elif defined(SYSTYPE_32)
+#if defined(SYSTYPE_32)
     opt_string& operator << (long i);
     opt_string& operator << (ulong i);
 #endif //SYSTYPE_WIN

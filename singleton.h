@@ -64,15 +64,23 @@
 ///Used for function-local singleton objects, unique for each module (dll)
 /// usage:
 /// LOCAL_FUNCTION_SINGLETON_DEF(class) name = new class;
+#ifdef SYSTYPE_WIN
 #define LOCAL_FUNCTION_SINGLETON_DEF(...) \
     static coid::singleton<__VA_ARGS__, __FUNCSIG__, std::source_location::current().line()>
-
+#elif defined(SYSTYPE_LINUX)
+#define LOCAL_FUNCTION_SINGLETON_DEF(...) \
+    static coid::singleton<__VA_ARGS__, __PRETTY_FUNCTION__, std::source_location::current().line()>
+#endif
 ///Used for function-local singleton objects returning process-wide singleton
 /// usage:
 /// LOCAL_FUNCTION_PROCWIDE_SINGLETON_DEF(class) name = new class;
+#ifdef SYSTYPE_WIN
 #define LOCAL_FUNCTION_PROCWIDE_SINGLETON_DEF(...) \
     static coid::singleton<__VA_ARGS__, __FUNCSIG__, std::source_location::current().line(), false>
-
+#elif defined(SYSTYPE_LINUX)
+#define LOCAL_FUNCTION_PROCWIDE_SINGLETON_DEF(...) \
+    static coid::singleton<__VA_ARGS__, __PRETTY_FUNCTION__, std::source_location::current().line(), false>
+#endif
 ///Used for file-local singleton objects, unique for each module (dll)
 /// usage:
 /// LOCAL_FILE_SINGLETON_DEF(class) name = new class;
@@ -96,10 +104,13 @@
 ///Used for function-local thread singleton objects
 /// usage:
 /// THREAD_LOCAL_SINGLETON_DEF(class) name = new class;
+#ifdef SYSTYPE_WIN
 #define THREAD_LOCAL_SINGLETON_DEF(...) \
     __declspec(thread) static coid::thread_singleton<__VA_ARGS__, __FUNCSIG__, std::source_location::current().line()>
-
-
+#elif defined(SYSTYPE_LINUX)
+#define THREAD_LOCAL_SINGLETON_DEF(...) \
+    thread_local static coid::thread_singleton<__VA_ARGS__, __PRETTY_FUNCTION__, std::source_location::current().line()>
+#endif
 ///Same as LOCAL_FUNCTION_SINGLETON_DEF (compatibility)
 #define LOCAL_SINGLETON_DEF(...) LOCAL_FUNCTION_SINGLETON_DEF(__VA_ARGS__)
 

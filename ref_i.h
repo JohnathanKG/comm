@@ -64,7 +64,7 @@ public:
 
     iref() : _p(0) {}
 
-    iref(nullptr_t) : _p(0) {}
+    iref(std::nullptr_t) : _p(0) {}
 
     iref(const iref_t& r) : _p(r.add_refcount()) {}
 

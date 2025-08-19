@@ -64,7 +64,7 @@ public:
 
     ref() : _p(0), _o(0) {}
 
-    explicit ref(nullptr_t) : ref() {};
+    explicit ref(std::nullptr_t) : ref() {};
 
     // from T* constructors
     explicit ref(T* o)

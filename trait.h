@@ -246,9 +246,9 @@ inline int alignment_size()
 template<class T>
 inline T* align_forward( void* p )
 {
-    size_t mask = alignment_size<T>() - 1;
+    std::size_t mask = alignment_size<T>() - 1;
 
-    return reinterpret_cast<T*>( (reinterpret_cast<size_t>(p) + mask) &~ mask );
+    return reinterpret_cast<T*>( (reinterpret_cast<std::size_t>(p) + mask) &~ mask );
 }
 
 ////////////////////////////////////////////////////////////////////////////////

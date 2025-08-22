@@ -55,8 +55,7 @@ static bool _enable_debug_out = false;
 
 #ifdef SYSTYPE_WIN
 #define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-
+#include <windows.h>
 static void write_console_text(const logmsg& msg)
 {
     const charstr& text = msg.str();

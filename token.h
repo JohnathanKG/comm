@@ -2639,7 +2639,7 @@ struct token
         opcd e = todate(tmm, token());
         if (e != NOERR)  return e;
 
-#ifdef SYSTYPE_MSVC
+#ifdef SYSTYPE_WIN
         dst = _mkgmtime(&tmm);
 #else
         dst = timegm(&tmm);

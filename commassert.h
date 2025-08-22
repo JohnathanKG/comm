@@ -76,11 +76,16 @@ COID_NAMESPACE_END
 
 ////////////////////////////////////////////////////////////////////////////////
 //Helper macros
-#ifdef SYSTYPE_MSVC
+#ifdef SYSTYPE_WIN
 #define XASSERT_BREAK               if (__assert_e) __debugbreak()
+#elif defined(SYSTYPE_CLANG)
+#define XASSERT_BREAK               if(__assert_e) __builtin_debugtrap()
+#elif defined(SYSTYPE_POSIX)
+#include <signal.h>
+#define XASSERT_BREAK               if (__assert_e) raise(SIGTRAP)
 #else
-#include <cassert>
-#define XASSERT_BREAK               assert(__assert_e);
+#include <signal.h>
+#define XASSERT_BREAK               if (__assert_e) raise(SIGABRT)
 #endif
 
 #ifdef _DEBUG
@@ -111,8 +116,8 @@ COID_NAMESPACE_END
 #define DASSERT(expr)               XASSERTCOND(expr) coid::__rassert(0,__FILE__,__LINE__,__FUNCTION__,#expr); XASSERT_FINAL; } while(0)
 #define DASSERTX(expr,txt)          XASSERTCOND(expr) coid::__rassert(coid::opt_string() << txt,__FILE__,__LINE__,__FUNCTION__,0); XASSERT_FINAL; } while(0)
 #define DASSERT_ONCE(expr)          do{ static bool once = false; if(expr || once) break;  bool __assert_e = coid::__rassert(0,__FILE__,__LINE__,__FUNCTION__,#expr); once = true; XASSERT_FINAL; } while(0)
-#define DASSERT_FATAL(expr)         XASSERTCOND(expr) coid::__rassert(0,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_FINAL; std::abort(); } while(0)
-#define DASSERT_FATALX(expr,txt)    XASSERTCOND(expr) coid::__rassert(coid::opt_string() << txt,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_FINAL; std::abort(); } while(0)
+#define DASSERT_FATAL(expr)         XASSERTCOND(expr) coid::__rassert(0,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_FINAL; abort(); } while(0)
+#define DASSERT_FATALX(expr,txt)    XASSERTCOND(expr) coid::__rassert(coid::opt_string() << txt,__FILE__,__LINE__,__FUNCTION__,#expr,true); XASSERT_FINAL; abort(); } while(0)
 //@}
 
 //@{ Assert in debug, return on failed assertion (also in release)

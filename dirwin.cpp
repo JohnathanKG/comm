@@ -38,14 +38,14 @@
 #include "dir.h"
 
 
-#ifdef SYSTYPE_MSVC
+#ifdef SYSTYPE_WIN
 
 #include <direct.h>
 #include <io.h>
 #include <errno.h>
 
 #define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <windows.h>
 
 extern "C" {
     int __stdcall GetUserProfileDirectoryA(void*, char*, ulong*);
@@ -599,4 +599,4 @@ directory::verify_path_syntax_result_enum directory::verify_path_syntax(const co
 COID_NAMESPACE_END
 
 
-#endif //SYSTYPE_MSVC
+#endif //SYSTYPE_WIN

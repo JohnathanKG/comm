@@ -2,7 +2,7 @@
 #include "../atomic/pool.h"
 
 #define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <windows.h>
 
 
 coid::stacktrace coid::stacktrace::get_current_stack_trace()

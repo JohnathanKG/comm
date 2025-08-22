@@ -67,7 +67,7 @@ public: // methods only
     int get_process_thread_priority() const;
 
 protected: // methods only
-#if defined(SYSTYPE_MSVC)
+#if defined(SYSTYPE_MSVC) || defined(SYSTYPE_MINGW)
     process(
         void* std_out_handle,
         void* std_err_handle,
@@ -86,7 +86,7 @@ protected: // methods only
 protected: // members only
     inline static const int pipe_buffer_size = 4096;
 
-#if defined(SYSTYPE_MSVC)
+#if defined(SYSTYPE_MSVC) || defined(SYSTYPE_MINGW)
     //unsigned long _std_out_peek_pos = 0;
 
     void* _std_out_handle = nullptr;

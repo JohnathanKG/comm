@@ -296,6 +296,10 @@ private:
     static constexpr uint8 MAGIC_MARK = 0x5c;
 
 public:
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     union {
         struct {
             uint32 idx;
@@ -306,7 +310,10 @@ public:
         uint64 value = NOVAL;
     };
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     constexpr versionid() = default;
     constexpr versionid(uint id, uint version) : idx(id), version(version), mark(MAGIC_MARK) {}
 

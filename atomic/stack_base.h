@@ -89,7 +89,7 @@ private:
 
         void operator=(const ptr_t& p) {
 #ifdef SYSTYPE_64
-#ifdef SYSTYPE_MSVC
+#ifdef SYSTYPE_WIN
             __movsq((uint64*)&_data, (uint64*)&p._data, 2);
 #else
             * ((__int128_t*)_data) = __sync_add_and_fetch((__int128_t*)&p._data, 0);

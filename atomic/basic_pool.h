@@ -80,7 +80,7 @@ public:
 
         void operator = (const ptr_t &p) {
 #ifdef SYSTYPE_64
-#ifdef SYSTYPE_MSVC
+#ifdef SYSTYPE_WIN
             //b_cas128(&_data, p._datah, p._data, const_cast<const int64*>(&_data));
             __movsq((uint64*)&_data, (uint64*)&p._data, 2);
 #else

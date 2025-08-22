@@ -6,6 +6,10 @@ include_directories(
     ${CMAKE_PROJ}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/
 )
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 add_library(comm STATIC
     binstring.cpp

@@ -1713,13 +1713,13 @@ static int dev_zero_fd = -1; /* Cached file descriptor for /dev/zero. */
 #else /* WIN32 */
 
 /* Win32 MMAP via VirtualAlloc */
-static FORCEINLINE void* win32mmap(size_t size) {
+FORCEINLINE void* win32mmap(size_t size) {
   void* ptr = VirtualAlloc(0, size, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
   return (ptr != 0)? ptr: MFAIL;
 }
 
 /* For direct MMAP, use MEM_TOP_DOWN to minimize interference [REMOVED] */
-static FORCEINLINE void* win32direct_mmap(size_t size, size_t commit_size, void* ptr) {
+FORCEINLINE void* win32direct_mmap(size_t size, size_t commit_size, void* ptr) {
   if (commit_size == 0)
     commit_size = size;
   if (ptr != 0) {
@@ -1742,7 +1742,7 @@ static FORCEINLINE void* win32direct_mmap(size_t size, size_t commit_size, void*
 }*/
 
 /* This function supports releasing coalesced segments */
-static FORCEINLINE int win32munmap(void* ptr, size_t size, int v) {
+FORCEINLINE int win32munmap(void* ptr, size_t size, int v) {
   MEMORY_BASIC_INFORMATION minfo;
   char* cptr = (char*)ptr;
   if (v) {

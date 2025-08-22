@@ -320,7 +320,11 @@ public:
     template<class ...Vs>
     static void print(log::level type, const token& from, const token& fmt, Vs&&... vs)
     {
+<<<<<<< Updated upstream
         ref<logmsg> msgr = canlog(type, from, 0, log::target::primary_log);
+=======
+        ref<logmsg> msgr = canlog(type, from, std::forward<Vs>(vs)...);
+>>>>>>> Stashed changes
         if (!msgr)
             return;
 

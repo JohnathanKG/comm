@@ -262,7 +262,7 @@ public:
 
     policy* give_me() { policy* tmp = _p; _p = 0; _o = 0; return tmp; }
 
-    int32 refcount() const { return _p ? _p->refcount() : 0; }
+    coid::int32 refcount() const { return _p ? _p->refcount() : 0; }
 
     friend bool operator == (const ref<T>& a, const ref<T>& b) {
         return a._o == b._o;

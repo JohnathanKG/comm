@@ -48,7 +48,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ///Bit scan
 
-#if defined(SYSTYPE_MSVC) || defined(SYSTYPE_MINGW)
+#ifdef SYSTYPE_MSVC
 #include <intrin.h>
 #ifndef SYSTYPE_CLANG
 #pragma intrinsic(_BitScanForward)
@@ -103,9 +103,9 @@ inline uint8 msb_bit_set( uint v )   { return 31-__builtin_clzl(v); }
 inline uint8 msb_bit_set( uint64 v ) { return 63-__builtin_clzll(v); }
 //@}
 
-inline ushort __popcnt16(ushort v) { return ushort(__builtin_popcount(v)); }
-inline uint __popcnt(uint v) { return uint(__builtin_popcount(v)); }
-inline int64 __popcnt64(uint64 v) { return int64(__builtin_popcountll(v)); }
+inline uint8 __popcnt16(ushort v) { return uint8(__builtin_popcount(v)); }
+inline uint8 __popcnt(uint v) { return uint8(__builtin_popcount(v)); }
+inline uint8 __popcnt64(uint64 v) { return uint8(__builtin_popcountll(v)); }
 #endif
 
 COID_NAMESPACE_BEGIN

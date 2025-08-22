@@ -38,7 +38,7 @@
 #include "timer.h"
 #include <ctime>
 
-#ifdef SYSTYPE_WIN
+#ifdef SYSTYPE_MSVC
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -224,4 +224,4 @@ uint msec_timer::get_time() {
 
 } // namespace coid
 
-#endif //SYSTYPE_WIN
+#endif //SYSTYPE_MSVC

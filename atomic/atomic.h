@@ -41,7 +41,7 @@
 
  //#define _WIN32_WINNT 0x0602
 
-#if defined(SYSTYPE_MSVC) || defined(SYSTYPE_MINGW)
+#if defined(SYSTYPE_MSVC) 
 #include <intrin.h>
 #ifndef SYSTYPE_CLANG
 #pragma intrinsic(_InterlockedIncrement)
@@ -215,20 +215,14 @@ inline bool b_cas128(
     volatile coid::int64 * ptr, const coid::int64 valh, const coid::int64 vall, coid::int64 * cmp)
 {
     DASSERT(sizeof(coid::int64) == 8);
-#if defined(SYSTYPE_WIN) && !defined(__GNUC__)
-    return _InterlockedCompare64Exchange128(
+#if defined(SYSTYPE_WIN)
+    return _InterlockedCompareExchange128(
         ptr,
         valh,
         vall,
-        *cmp) == 1;
+        cmp) == 1;
 #elif defined(__GNUC__)
-<<<<<<< Updated upstream
     return (coid::int64*)__sync_bool_compare_and_swap((__int128_t*)ptr, *(__int128_t*)cmp, (__int128_t(valh) << 64) + vall);
-=======
-    __int128_t old_val = *(__int128_t*)cmp;
-    __int128_t new_val = ((__int128_t)valh << 64) | (__int128_t)vall;
-    return __sync_bool_compare_and_swap((__int128_t*)ptr, old_val, new_val);
->>>>>>> Stashed changes
 #endif
 }
 #endif

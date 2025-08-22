@@ -45,7 +45,6 @@
 #include "dynarray.h"
 #include "commexception.h"
 
-#include <algorithm>
 #include <limits>
 #include <type_traits>
 

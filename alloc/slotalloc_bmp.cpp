@@ -1,7 +1,6 @@
 #include "slotalloc_bmp.h"
 #include "../str.h"
 #include "../rnd.h"
-#include <cstdio>
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -63,13 +62,15 @@ void coid::test::slotalloc_bmp()
     uints item = data.get_item_id(d);
 
     item = data.first();
+    while (item != UINTS_MAX) {
         if (!data.is_valid(item)) {
             DASSERT(false && "this should not happen!");
             data.is_valid(item);
         }
 
-        std::printf("%zu %s\n", static_cast<size_t>(item), data.get_item(item)->_name.c_str());
+        printf("%zu %s\n", item, data.get_item(item)->_name.c_str());
         item = data.next(item);
+    }
 }
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

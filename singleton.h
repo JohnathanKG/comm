@@ -54,11 +54,11 @@
 
 ///Retrieves module (current dll/exe) singleton object of given type T
 #define SINGLETON(...) \
-    singleton<__VA_ARGS__>::instance(true, std::source_location::current())
+    coid::singleton<__VA_ARGS__>::instance(true, std::source_location::current())
 
 ///Retrieves process-wide global singleton object of given type T
 #define PROCWIDE_SINGLETON(...) \
-    singleton<__VA_ARGS__>::instance(false, std::source_location::current())
+    coid::singleton<__VA_ARGS__>::instance(false, std::source_location::current())
 
 
 ///Used for function-local singleton objects, unique for each module (dll)
@@ -106,17 +106,11 @@
 /// THREAD_LOCAL_SINGLETON_DEF(class) name = new class;
 #ifdef SYSTYPE_WIN
 #define THREAD_LOCAL_SINGLETON_DEF(...) \
-<<<<<<< Updated upstream
     __declspec(thread) static coid::thread_singleton<__VA_ARGS__, __FUNCSIG__, std::source_location::current().line()>
 #elif defined(SYSTYPE_LINUX)
 #define THREAD_LOCAL_SINGLETON_DEF(...) \
     thread_local static coid::thread_singleton<__VA_ARGS__, __PRETTY_FUNCTION__, std::source_location::current().line()>
 #endif
-=======
-    thread_local static coid::thread_singleton<__VA_ARGS__, __FUNCSIG__, std::source_location::current().line()>
-
-
->>>>>>> Stashed changes
 ///Same as LOCAL_FUNCTION_SINGLETON_DEF (compatibility)
 #define LOCAL_SINGLETON_DEF(...) LOCAL_FUNCTION_SINGLETON_DEF(__VA_ARGS__)
 

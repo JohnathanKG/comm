@@ -535,7 +535,7 @@ private:
     xstat _st;
     uint _baselen = 0;
 
-#ifdef SYSTYPE_WIN
+#ifdef SYSTYPE_MSVC
     ints _handle = 0;
 #else
     DIR* _dir = 0;

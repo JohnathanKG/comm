@@ -45,16 +45,14 @@
 #include "str.h"
 #include "pthreadx.h"
 
-#ifdef SYSTYPE_MINGW
-#define xstat64 __stat64
-#elif defined(SYSTYPE_MSVC)
+COID_NAMESPACE_BEGIN
+
+#if defined(SYSTYPE_MSVC)
 #define xstat64 _stat64
 #else
 #define xstat64 stat64
+#include <unistd.h>
 #endif
-
-COID_NAMESPACE_BEGIN
-
 
 
 const char* directory::no_trail_sep(zstring& name)
